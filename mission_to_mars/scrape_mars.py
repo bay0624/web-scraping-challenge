@@ -1,29 +1,29 @@
 import pandas as pd
-import requests
+# import requests
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-def extract_image(url):
-    response = requests.get(url)
-    soup = bs(response.text, "html.parser")
-    image = soup.find_all("img", class_="wide-image")
-    img = [i.get("src") for i in image]
-    return "https://marshemispheres.com/" + img[0]
+# def extract_image(url):
+#     response = requests.get(url)
+#     soup = bs(response.text, "html.parser")
+#     image = soup.find_all("img", class_="wide-image")
+#     img = [i.get("src") for i in image]
+#     return "https://marshemispheres.com/" + img[0]
 
 
-def image_title(url):
-    response = requests.get(url)
-    soup = bs(response.text, "html.parser")
-    title = soup.find_all("h2", class_="title")
-    title_text = [i.text for i in title]
-    return title_text[0]
+# def image_title(url):
+#     response = requests.get(url)
+#     soup = bs(response.text, "html.parser")
+#     title = soup.find_all("h2", class_="title")
+#     title_text = [i.text for i in title]
+#     return title_text[0]
 
 
-def get_dict_list(keys, list_of_tups):
-    list_of_dict = [dict(zip(keys, values)) for values in list_of_tups]
-    return list_of_dict
+# def get_dict_list(keys, list_of_tups):
+#     list_of_dict = [dict(zip(keys, values)) for values in list_of_tups]
+#     return list_of_dict
 
 
 def scrape():
@@ -48,25 +48,61 @@ def scrape():
     paragraph = soup_1.find_all("div", class_="article_teaser_body")[0]
     latest_news_paragraph = paragraph.text
 
-    # HEMISPHERE IMAGE SCRAPE
+    # HEMISPHERE IMAGE SCRAPE - Was getting IndexError with Requests
+    # hemi_url = "https://marshemispheres.com/"
+    # url_path = requests.get(hemi_url)
+    # soup_2 = bs(url_path.content)
+    # div_item = soup_2.find_all("div", class_="item")
+
+    # links = []
+    # for i in div_item:
+    #     for a in i.find_all('a', href=True): 
+    #         if a.text:
+    #             links.append(a['href'])
+
+    # full_links = [url + i for i in links]
+    # img_url = [extract_image(i) for i in full_links]
+    # title = [image_title(i) for i in full_links]
+    # list_tups = list(zip(title, img_url))
+
+    # keys = ("title", "img_url")
+    # hemisphere_image_urls = get_dict_list(keys, list_tups)
+
+    # SIMPLIFIED HEMISPHERE IMAGE SCRAPE - Above functions not needed (Used Spliner)
     hemi_url = "https://marshemispheres.com/"
-    url_path = requests.get(hemi_url)
-    soup_2 = bs(url_path.content)
-    div_item = soup_2.find_all("div", class_="item")
+    browser.visit(hemi_url)
+    hemisphere_image_urls = []
 
-    links = []
-    for i in div_item:
-        for a in i.find_all('a', href=True): 
-            if a.text:
-                links.append(a['href'])
+    for i in range(4):
+        html = browser.html
+        soup = bs(html, "html.parser")
+    
+        title = soup.find_all("h3")[i].get_text()
+        browser.find_by_tag('h3')[i].click()
+    
+        html = browser.html
+        soup = bs(html, "html.parser")
+    
+        img_url = soup.find("img", class_="wide-image")["src"]
+    
+        hemisphere_image_urls.append({
+            "title": title,
+            "img_url": hemi_url + img_url
+        })
+        browser.back()
+        
+    title1 = hemisphere_image_urls[0]["title"]
+    image1 = hemisphere_image_urls[0]["img_url"]
+    
+    title2 = hemisphere_image_urls[1]["title"]
+    image2 = hemisphere_image_urls[1]["img_url"]
 
-    full_links = [url + i for i in links]
-    img_url = [extract_image(i) for i in full_links]
-    title = [image_title(i) for i in full_links]
-    list_tups = list(zip(title, img_url))
+    title3 = hemisphere_image_urls[2]["title"]
+    image3 = hemisphere_image_urls[2]["img_url"]
 
-    keys = ("title", "img_url")
-    hemisphere_image_urls = get_dict_list(keys, list_tups)
+    title4 = hemisphere_image_urls[3]["title"]
+    image4 = hemisphere_image_urls[3]["img_url"]
+          
 
     # COMPARISON TABLE SCRAPE
     table_url = "https://galaxyfacts-mars.com/"
@@ -83,7 +119,7 @@ def scrape():
     df = pd.DataFrame(table_df)
     df.set_index("Description", inplace=True)
     df["Earth"] = df["Earth"].str.replace("\t", "")
-    comparison_table = df.to_html()
+    comparison_table = df.to_html(classes="table table-striped")
 
     browser.quit()
 
@@ -92,40 +128,19 @@ def scrape():
     
     final_mars_data = {
     "latest_title": latest_news_title,
-    "latest_para" : latest_news_paragraph,
+    "latest_paragraph" : latest_news_paragraph,
+    "featured_image": featured_image_url,
     "html_table": comparison_table,
-    "hemisphere_scrape": hemisphere_image_urls
+    "hemisphere_scrape": hemisphere_image_urls,
+    "title1": title1,
+    "title2": title2,
+    "title3": title3,
+    "title4": title4,
+    "image1": image1,
+    "image2": image2,
+    "image3": image3,
+    "image4": image4,
+
     }
 
     return final_mars_data
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -7,7 +7,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/mission_to_mars")
 
 
 @app.route("/")
-def home():
+def echo():
     final_mars_data = mongo.db.collection.find_one()
     return render_template("index.html", final_mars_data=final_mars_data)
 
