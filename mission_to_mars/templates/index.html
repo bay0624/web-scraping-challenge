@@ -13,34 +13,96 @@
 <body>
     <div class="container">
 
-        <div class="jumbotron text-center">
+        <div class="jumbotron text-center bg-light">
             <h1>Mission to Mars</h1>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Scrape More Data</a>
+            <a class="btn btn-dark btn-lg" href="/scrape" role="button">Get Latest Mars Data</a>
         </div>
-        <h2>Latest Mars News</h2>
-        <h5>Headline Goes Here</h5>
-        <p>News Summary Goes Here</p><br>
+        <h2>Latest Mars News</h2><hr>
+        <h5>{{ final_mars_data.latest_title }}</h5>
+        <h6 class="text-muted">{{ final_mars_data.latest_paragraph }}</h6><br>
 
         <div class="container">
-            <div class="row">
+            <div class="row row-cols-*">
                 <div class="col">
-                    <h2>Featured Mars Image</h2>
+                    <h2>Featured Mars Image</h2> <img class="img-fluid" src="{{ final_mars_data.featured_image }}">
                 </div>
                 <div class="col">
-                    <h5>Mars Facts</h5>
+
+                    <div class="table-responsive">
+                        <h5>Earth & Mars Comparison</h5>
+                        {{ final_mars_data.html_table | safe}}
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- <br><br><br> -->
+
+    <!-- <div class="container">
+        <h2 class="text-center">Mars Hemispheres</h2>
+        <hr>
+        <div class="row row-cols-*">
+            <div class="col"><img class="img-fluid rounded" src="https://marshemispheres.com/images/full.jpg"></div>
+            <div class="col"><img class="img-fluid rounded" src="https://marshemispheres.com/images/full.jpg"></div>
+            <div class="col"><img class="img-fluid rounded" src="https://marshemispheres.com/images/full.jpg"></div>
+            <div class="col"><img class="img-fluid rounded" src="https://marshemispheres.com/images/full.jpg"></div>
 
 
-
-
-
-
-
+        </div> -->
 
     </div>
 
+    
+
+    <div class="container mt-4 bg-light rounded"><br>
+        <h2 class="text-center">Mars Hemispheres</h2><br>
+        <!-- <hr> -->
+        <div class="card-group">
+
+            <div class="col-md-3">
+                <div class="card">
+
+                    <img src="{{ final_mars_data.image1 }}" class="card-img-top img-fluid" alt="{{ final_mars_data.image1 }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ final_mars_data.title1 }}</h5>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="card">
+
+                    <img src="{{ final_mars_data.image2 }}" class="card-img-top img-fluid" alt="{{ final_mars_data.title2 }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ final_mars_data.title2 }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+
+                    <img src="{{ final_mars_data.image3 }}" class="card-img-top img-fluid" alt="{{ final_mars_data.title3 }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ final_mars_data.title3 }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+
+                    <img src="{{ final_mars_data.image4 }}" class="card-img-top img-fluid" alt="{{ final_mars_data.title4 }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ final_mars_data.title4 }}</h5>
+                    </div>
+                </div>
+            </div>
+
+
+        </div><br><br>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -52,6 +114,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <script type='text/javascript'>
+        window.onload = function () {
+            const thead = document.querySelectorAll('.table > thead');
+            thead.forEach(e => e.classList.add('thead-dark'));
+        }
+    </script>
 </body>
 
 </html>
