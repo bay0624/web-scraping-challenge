@@ -1,6 +1,6 @@
 # Mission to Mars
 ## Objective
-A web app that scrapes various websites for the latest information and/or news on the planet Mars. These information will then be displayed in a single responsive HTML page. Below is a screenshot of the webpage:
+A web app that scrapes various websites for the latest information, news and images of planet Mars. These information will then be displayed in a single responsive HTML page. Below is a screenshot of the webpage:
 
 ![Mission_to_Mars](https://github.com/bay0624/web-scraping-challenge/blob/main/mission_to_mars.png)
 
