@@ -5,7 +5,7 @@ A web app that scrapes various websites for the latest information, news and ima
 ![Mission_to_Mars](https://github.com/bay0624/web-scraping-challenge/blob/main/mission_to_mars.png)
 
 ## Technologies
-- <b>Beautiful Soup & Splinter</b>: For webscraping the data from various websites.
+- <b>Beautiful Soup & Splinter</b>: For scraping the data from various websites.
 - <b>Flask</b>: For building the web application.
 - <b>HTML & Bootstrap (CSS)</b>: For designing and styling the web page.
 - <b>PyMongo</b>: For interacting with the Mongo Database.
