@@ -11,3 +11,9 @@ A web app that scrapes various websites for the latest information, news and ima
 - <b>PyMongo</b>: For interacting with the Mongo Database.
 - <b>Python</b>: For writing the function that will execute all of the scraping code.
 - <b>Pandas</b>: For designing the Mars v. Earth Comparison table.
+
+## Resources
+- https://redplanetscience.com/
+- https://spaceimages-mars.com/
+- https://galaxyfacts-mars.com/
+- https://marshemispheres.com/
