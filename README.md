@@ -9,7 +9,6 @@ A web app that scrapes various websites for the latest information, news and ima
 - <b>Flask</b>: For building the web application.
 - <b>HTML & Bootstrap (CSS)</b>: For designing and styling the web page.
 - <b>PyMongo</b>: For interacting with the Mongo Database.
-- <b>Python</b>: For writing the function that will execute all of the scraping code.
 - <b>Pandas</b>: For designing the Mars v. Earth Comparison table.
 
 ## Resources
